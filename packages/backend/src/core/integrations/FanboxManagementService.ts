@@ -143,23 +143,9 @@ export class FanboxManagementService implements OnApplicationShutdown {
 	@bindThis
 	private async fetchUsers(): Promise<Record<string, number>> {
 		this.logger.debug('Getting fanbox supporters from api');
-
-		const plans = (await this.request('plan'))?.body;
-		const members = (await this.request('relationship'))?.body;
-
-		if (!plans || !members) throw new Error('Failed to fetch fanbox supporters');
-
-		const plansMap = {} as Record<string, number>;
-		for (const plan of plans) {
-			plansMap[plan.id] = plan.fee;
-		}
-
-		const membershipUsers = {} as Record<string, number>;
-		for (const member of members) {
-			membershipUsers[member.user.userId] = plansMap[member.planId];
-		}
-
-		return membershipUsers;
+		const users = await this.request('users');
+		if (!users) throw new Error('Failed to fetch fanbox supporters');
+		return users;
 	}
 
 	@bindThis
