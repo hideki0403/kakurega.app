@@ -167,7 +167,7 @@ export class UrlPreviewService implements OnApplicationShutdown {
 			contentLengthRequired: this.meta.urlPreviewRequireContentLength,
 		});
 
-		return this.httpRequestService.getJson<SummalyResult>(`${proxy}?${queryStr}`, 'application/json, */*', meta.urlPreviewSecretKey ? { Authorization: `Bearer ${meta.urlPreviewSecretKey}` } : undefined, true);
+		return this.httpRequestService.getJson<SummalyResult>(`${proxy}?${queryStr}`, 'application/json, */*', this.meta.urlPreviewSecretKey ? { Authorization: `Bearer ${this.meta.urlPreviewSecretKey}` } : undefined, true);
 	}
 
 	@bindThis
