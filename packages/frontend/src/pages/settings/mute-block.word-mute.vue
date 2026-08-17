@@ -5,7 +5,6 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <template>
 <div class="_gaps_m">
-	<MkButton v-if="oldMutedWords && props.hard" inline rounded @click="transferOldMuteWords()">{{ i18n.ts.transferOldMuteWords }}</MkButton>
 	<div>
 		<MkTextarea v-model="mutedWords">
 			<span>{{ i18n.ts._wordMute.muteWords }}</span>
@@ -17,16 +16,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import MkTextarea from '@/components/MkTextarea.vue';
 import MkButton from '@/components/MkButton.vue';
 import * as os from '@/os.js';
 import { i18n } from '@/i18n.js';
-import { store } from '@/store.js';
 
 const props = defineProps<{
 	muted: (string[] | string)[];
-	hard?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -43,8 +40,6 @@ const render = (mutedWords: (string | string[])[]) => mutedWords.map(x => {
 
 const mutedWords = ref(render(props.muted));
 const changed = ref(false);
-
-const oldMutedWords = ref(render(store.s.mutedWords));
 
 watch(mutedWords, () => {
 	changed.value = true;
@@ -93,20 +88,5 @@ async function save() {
 	emit('save', parsed);
 
 	changed.value = false;
-}
-
-async function transferOldMuteWords() {
-	const { canceled } = await os.confirm({
-		type: 'warning',
-		text: i18n.ts.transferOldMuteWordsDescription,
-	});
-
-	if (canceled) return;
-	mutedWords.value = oldMutedWords.value;
-
-	oldMutedWords.value = '';
-	store.set('mutedWords', []); // clear old muted words
-
-	save();
 }
 </script>

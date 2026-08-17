@@ -1301,8 +1301,6 @@ impressumDescription: "ドイツなどの一部の国と地域では表示が義
 privacyPolicy: "プライバシーポリシー"
 privacyPolicyUrl: "プライバシーポリシーURL"
 tosAndPrivacyPolicy: "利用規約・プライバシーポリシー"
-transferOldMuteWords: "以前に設定していたハードワードミュートを移行する"
-transferOldMuteWordsDescription: "移行は一回しか行えず、現在設定されているハードワードミュートは上書きされます。続行しますか？"
 optoutStatistics: "エラー情報の送信をやめる"
 optoutStatisticsDescription: "{instance}では、不具合の原因の特定を行えるよう、問題が発生したときにエラーの詳細情報を取得しています。ONにすることで、エラー情報の送信をしないようにします。"
 autoRejectFollowRequest: "フォローリクエストを自動で拒否する"

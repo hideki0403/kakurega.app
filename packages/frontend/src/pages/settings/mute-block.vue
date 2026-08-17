@@ -44,7 +44,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 					<div class="_gaps_m">
 						<MkInfo>{{ i18n.ts.hardWordMuteDescription }}</MkInfo>
-						<XWordMute :muted="$i.hardMutedWords" :hard="true" @save="saveHardMutedWords"/>
+						<XWordMute :muted="$i.hardMutedWords" @save="saveHardMutedWords"/>
 					</div>
 				</MkFolder>
 			</SearchMarker>
