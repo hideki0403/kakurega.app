@@ -14,6 +14,7 @@ import { lookup } from '@/utility/lookup.js';
 import * as os from '@/os.js';
 import { i18n } from '@/i18n.js';
 import { store } from '@/store.js';
+import { prefer } from '@/preferences.js';
 import { unisonReload } from '@/utility/unison-reload.js';
 
 export const navbarItemDef = reactive<{
@@ -223,15 +224,15 @@ export const navbarItemDef = reactive<{
 				text: i18n.ts.dataSaver,
 				children: [{
 					text: i18n.ts.on,
-					active: store.s.enableDataSaverMode,
+					active: prefer.s.enableDataSaverMode,
 					action: () => {
-						store.set('enableDataSaverMode', true);
+						prefer.commit('enableDataSaverMode', true);
 					},
 				}, {
 					text: i18n.ts.off,
-					active: !store.s.enableDataSaverMode,
+					active: !prefer.s.enableDataSaverMode,
 					action: () => {
-						store.set('enableDataSaverMode', false);
+						prefer.commit('enableDataSaverMode', false);
 					},
 				}],
 			}], ev.currentTarget ?? ev.target);

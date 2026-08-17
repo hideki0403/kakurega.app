@@ -9,8 +9,8 @@ import { prefer } from '@/preferences.js';
 import { i18n } from '@/i18n.js';
 import { getDataSaverState } from '@/utility/datasaver.js';
 
-export function shouldHideFileByDefault(file: Misskey.entities.DriveFile): boolean {
-	if (prefer.s.nsfw === 'force' || getDataSaverState('media')) {
+export function shouldHideFileByDefault(file: Misskey.entities.DriveFile, ignoreDataSaver = false): boolean {
+	if (prefer.s.nsfw === 'force' || (!ignoreDataSaver && getDataSaverState('media'))) {
 		return true;
 	}
 
