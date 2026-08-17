@@ -203,8 +203,8 @@ export async function common(createVue: () => Promise<App<Element>>) {
 
 	if (!isSafeMode) {
 		//#region Auto data saver
-		if (store.s.autoDataSaver) {
-			store.set('enableDataSaverMode', isMobileData());
+		if (prefer.s.autoDataSaver) {
+			prefer.commit('enableDataSaverMode', isMobileData());
 			initializeDetectNetworkChange();
 		}
 		//#endregion
