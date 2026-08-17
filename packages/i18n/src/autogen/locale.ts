@@ -5217,14 +5217,6 @@ export interface Locale extends ILocale {
      */
     "tosAndPrivacyPolicy": string;
     /**
-     * 以前に設定していたハードワードミュートを移行する
-     */
-    "transferOldMuteWords": string;
-    /**
-     * 移行は一回しか行えず、現在設定されているハードワードミュートは上書きされます。続行しますか？
-     */
-    "transferOldMuteWordsDescription": string;
-    /**
      * エラー情報の送信をやめる
      */
     "optoutStatistics": string;
