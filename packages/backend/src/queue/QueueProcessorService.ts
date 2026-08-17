@@ -525,12 +525,21 @@ export class QueueProcessorService implements OnApplicationShutdown {
 
 		//#region scheduled note delete
 		{
+			const logger = this.logger.createSubLogger('scheduled-note-delete');
+
 			this.scheduledNoteDeleteQueueWorker = new Bull.Worker(QUEUE.SCHEDULED_NOTE_DELETE, (job) => {
-				if (Sentry != null) {
-					return Sentry.startSpan({ name: 'Queue: ScheduledNoteDelete' }, () => this.scheduledNoteDeleteProcessorService.process(job));
-				} else {
-					return this.scheduledNoteDeleteProcessorService.process(job);
-				}
+				return runQueueJob(
+					this.telemetryService,
+					'Queue: ScheduledNoteDelete',
+					() => this.scheduledNoteDeleteProcessorService.process(job),
+					err => {
+						logger.error(`failed(${err.name}: ${err.message}) id=${job.id}`, { job: renderJob(job), e: renderError(err) });
+						this.telemetryService.captureMessage(`Queue: ScheduledNoteDelete: ${err.name}: ${err.message}`, {
+							level: 'error',
+							extra: { job, err },
+						});
+					},
+				);
 			}, {
 				...baseWorkerOptions(this.config, QUEUE.SCHEDULED_NOTE_DELETE),
 				autorun: false,
@@ -540,12 +549,21 @@ export class QueueProcessorService implements OnApplicationShutdown {
 
 		//#region clean remote notes
 		{
+			const logger = this.logger.createSubLogger('clean-remote-notes');
+
 			this.cleanRemoteNotesQueueWorker = new Bull.Worker(QUEUE.CLEAN_REMOTE_NOTES, (job) => {
-				if (Sentry != null) {
-					return Sentry.startSpan({ name: 'Queue: CleanRemoteNotes' }, () => this.cleanRemoteNotesProcessorService.process(job));
-				} else {
-					return this.cleanRemoteNotesProcessorService.process(job);
-				}
+				return runQueueJob(
+					this.telemetryService,
+					'Queue: CleanRemoteNotes',
+					() => this.cleanRemoteNotesProcessorService.process(job),
+					err => {
+						logger.error(`failed(${err.name}: ${err.message}) id=${job.id}`, { job: renderJob(job), e: renderError(err) });
+						this.telemetryService.captureMessage(`Queue: CleanRemoteNotes: ${err.name}: ${err.message}`, {
+							level: 'error',
+							extra: { job, err },
+						});
+					},
+				);
 			}, {
 				...baseWorkerOptions(this.config, QUEUE.CLEAN_REMOTE_NOTES),
 				autorun: false,
